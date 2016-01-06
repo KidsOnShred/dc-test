@@ -4,9 +4,9 @@
  * @description Holds product information
  */
 class Product {
-	private $code;
-	private $name;
-	private $price;
+	protected $code;
+	protected $name;
+	protected $price;
 
 	/**
 	 * public __construct

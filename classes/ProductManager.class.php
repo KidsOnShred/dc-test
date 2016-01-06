@@ -16,11 +16,11 @@ class ProductManager {
 	 */
 	public function __construct() {
 		// Create our data and push to products array
-		$this->products[] = new Product( 111, 'Strawberry', '£2');
-		$this->products[] = new Product( 222, 'Apple', '£1.5');
-		$this->products[] = new Product( 333, 'Pear', '£4');
-		$this->products[] = new Product( 444, 'Cherry', '£1');
-		$this->products[] = new Product( 555, 'Peach', '£5');
+		$this->products[] = new Product( 111, 'Strawberry', 2);
+		$this->products[] = new Product( 222, 'Apple', 1.5);
+		$this->products[] = new Product( 333, 'Pear', 4);
+		$this->products[] = new Product( 444, 'Cherry', 1);
+		$this->products[] = new Product( 555, 'Peach', 5);
 
 
 		/*- code: 111, name: strawberry, price per item: £2, discount: buy one get one free. (Every second strawberry is free)

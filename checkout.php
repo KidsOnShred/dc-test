@@ -1,11 +1,11 @@
 <?php 
 	include_once('classes/Checkout.class.php');
-	include_once('classes/ProductManager.class.php');
 
 	setlocale(LC_MONETARY, 'en_GB.UTF-8');
 
 	$Checkout = new Checkout();
-	$ProductManager = new ProductManager();
+
+	$discount = $Checkout->calculateDiscount();
 ?>
 <!doctype html>
 
@@ -26,44 +26,7 @@
 
 <body>
 	<div class="row">
-		<section class="col-sm-8">
-			<h2>Products</h2>
-
-			<form action="add-to-basket.php" method="post">
-				<table class="table table-striped">
-					<tr>
-						<th>Code</th>
-						<th>Name</th>
-						<th>Price</th>
-						<th>Discount</th>
-						<th></th>
-					</tr>
-					<?php
-						foreach( $ProductManager->getProducts() as $i => $product ) {
-							?>
-							<tr>
-								<td><?= $product->getCode() ?></td>
-							 	<td><?= $product->getName() ?></td>
-							 	<td><?= money_format('%n', $product->getPrice()) ?></td>
-							 	<td>
-							 		<?php
-							 			$discount[$i] = $Checkout->getProductDiscount( $product->getCode() );
-							 			if ( $discount[$i] ) {
-							 				echo $discount[$i]->getDescription();
-							 			}
-							 		?>
-							 	</td>
-							 	<td>
-							 		<button class="btn btn-success" type="submit" name="code" value="<?= $product->getCode() ?>">Add to basket</button>
-							 	</td>
-							</tr>
-					<?php
-						}
-					?>
-				</table>
-			</form>
-		</section>
-		<section class="col-sm-4">
+		<section class="col-sm-12">
 			<h2>Basket</h2>
 			<table class="table table-striped table-bordered">
 				<tr>
@@ -73,7 +36,6 @@
 				</tr>
 				<?php
 					$basket = $Checkout->getBasket();
-					
 					foreach( $basket as $i => $product ) {
 				?>
 						<tr>
@@ -84,8 +46,11 @@
 				<?php
 					}
 				?>
-				<tr><td colspan="3"><a href="/checkout.php" class="btn btn-success">Checkout</a> <a href="/clearcookies.php" class="btn btn-danger">Empty Basket</a></td></tr>
+				<tr><td colspan="3">Total Price: <?= money_format('%n', $Checkout->getBasketTotal()) ?></td></tr>
+				<tr><td colspan="3">Discount: -<?= money_format('%n', $discount )?></td></tr>
+				<tr><td colspan="3">To Pay: <?= money_format('%n', $Checkout->getBasketTotal() - $discount )?></td></tr>
 			</table>
+			<a href="/index.php" class="btn btn-primary">Back to shop</a>
 		</section>
 		
 <!-- Latest compiled and minified JavaScript -->
